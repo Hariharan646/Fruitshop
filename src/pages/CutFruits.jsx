@@ -8,10 +8,7 @@ function CutFruits() {
 
   return (
     <>
-      <div className="page-banner">
-        <h1>🍉 Cut Fruits</h1>
-        <p>Ready-to-eat fresh cuts — no prep needed</p>
-      </div>
+      
 
       <section className="section">
         <div className="product-grid">

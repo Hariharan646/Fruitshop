@@ -1,8 +1,51 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import ProductCard from "../components/ProductCard";
 import fruits from "../data/fruits";
 
 function Home() {
+  const [categories, setCategories] = useState([
+    {
+      id: 1,
+      title: "Fresh Fruits",
+      text: "Hand-picked seasonal fruits",
+      image:
+        "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=600",
+      link: "/fresh-fruits",
+    },
+    {
+      id: 2,
+      title: "Fruit Boxes",
+      text: "Curated gift boxes & bundles",
+      image:
+        "https://images.unsplash.com/photo-1607349913338-fca6f7fc42d0?w=600",
+      link: "/fruit-boxes",
+    },
+    {
+      id: 3,
+      title: "Cut Fruits",
+      text: "Ready-to-eat fresh cuts",
+      image:
+        "https://images.unsplash.com/photo-1564093497595-593b96d80180?w=600",
+      link: "/cut-fruits",
+    },
+  ]);
+
+  const nextSlide = () => {
+    setCategories((prev) => [
+      ...prev.slice(1),
+      prev[0],
+    ]);
+  };
+
+  const prevSlide = () => {
+    setCategories((prev) => [
+      prev[prev.length - 1],
+      ...prev.slice(0, -1),
+    ]);
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -25,7 +68,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Categories */}
+      {/* Categories Slider */}
       <section
         className="section"
         style={{ background: "#f9fafb" }}
@@ -38,37 +81,56 @@ function Home() {
           Choose from our wide range of fresh products
         </p>
 
-        <div className="category-grid">
-          <Link
-            to="/fresh-fruits"
-            className="category-card"
-          >
-            <div className="cat-icon">🍎</div>
-            <h3>Fresh Fruits</h3>
-            <p>Hand-picked seasonal fruits</p>
-          </Link>
+        <div className="category-slider">
 
-          <Link
-            to="/fruit-boxes"
-            className="category-card"
+          <button
+            onClick={prevSlide}
+            className="slider-btn"
           >
-            <div className="cat-icon">🎁</div>
-            <h3>Fruit Boxes</h3>
-            <p>Curated gift boxes & bundles</p>
-          </Link>
+            ◀
+          </button>
 
-          <Link
-            to="/cut-fruits"
-            className="category-card"
+          <div className="slider-track">
+            <AnimatePresence>
+              {categories.map((category) => (
+                <motion.div
+                  key={category.id}
+                  layout
+                  transition={{
+                    duration: 0.6,
+                    type: "spring",
+                  }}
+                >
+                  <Link
+                    to={category.link}
+                    className="slider-card"
+                  >
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="slider-image"
+                    />
+
+                    <h3>{category.title}</h3>
+
+                    <p>{category.text}</p>
+                  </Link>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+
+          <button
+            onClick={nextSlide}
+            className="slider-btn"
           >
-            <div className="cat-icon">🍉</div>
-            <h3>Cut Fruits</h3>
-            <p>Ready-to-eat fresh cuts</p>
-          </Link>
+            ▶
+          </button>
+
         </div>
       </section>
 
-      {/* All Products */}
+      {/* Products */}
       <section className="section">
         <h2 className="section-title">
           Our Products
@@ -105,6 +167,7 @@ function Home() {
         </p>
 
         <div className="category-grid">
+
           <div className="category-card">
             <div className="cat-icon">🌿</div>
             <h3>100% Natural</h3>
@@ -128,6 +191,7 @@ function Home() {
             <h3>Easy Returns</h3>
             <p>Not happy? We'll make it right</p>
           </div>
+
         </div>
       </section>
     </>
