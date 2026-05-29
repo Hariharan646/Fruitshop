@@ -670,3 +670,24 @@ body {
 
   padding:2px;
 }
+
+.hero-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, #43a047, #2e7d32);
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.hero-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+}
+.hero-btn:active {
+  transform: translateY(0);
+}
