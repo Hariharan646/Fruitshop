@@ -1,8 +1,11 @@
 import { useState } from "react";
 import fruits from "../data/fruits";
+import { useCart } from "../context/CartContext";
 
 export default function FruitBoxes() {
   const [boxItems, setBoxItems] = useState([]);
+
+  const { addToCart } = useCart();
 
   const addToBox = (fruit) => {
     setBoxItems([...boxItems, fruit]);
@@ -17,6 +20,21 @@ export default function FruitBoxes() {
     0
   );
 
+  const addBoxToCart = () => {
+    if (boxItems.length === 0) {
+      alert("Please add fruits to the box first!");
+      return;
+    }
+
+    boxItems.forEach((fruit) => {
+      addToCart(fruit);
+    });
+
+    alert("Fruit Box added to cart!");
+
+    setBoxItems([]);
+  };
+
   return (
     <div
       style={{
@@ -26,7 +44,7 @@ export default function FruitBoxes() {
         alignItems: "flex-start",
       }}
     >
-      {/* LEFT */}
+      {/* LEFT SIDE */}
       <div style={{ flex: 3 }}>
         <h1>Available Fruits</h1>
 
@@ -82,7 +100,7 @@ export default function FruitBoxes() {
         </div>
       </div>
 
-      {/* RIGHT */}
+      {/* RIGHT SIDE */}
       <div
         style={{
           flex: 1,
@@ -118,9 +136,7 @@ export default function FruitBoxes() {
                 </div>
 
                 <button
-                  onClick={() =>
-                    removeFruit(index)
-                  }
+                  onClick={() => removeFruit(index)}
                   style={{
                     background: "red",
                     color: "#fff",
@@ -138,6 +154,7 @@ export default function FruitBoxes() {
             <h3>Total: ₹{totalPrice}</h3>
 
             <button
+              onClick={addBoxToCart}
               style={{
                 width: "100%",
                 background: "green",
@@ -146,6 +163,7 @@ export default function FruitBoxes() {
                 padding: "12px",
                 borderRadius: "8px",
                 cursor: "pointer",
+                marginTop: "10px",
               }}
             >
               Add Box To Cart
